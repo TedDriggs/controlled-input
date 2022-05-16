@@ -14,15 +14,15 @@ import {
  * @param props
  *      The `props` from which the `ControlledInput` properties should be taken.
  */
-const replaceChangeHandlerImplementation = <T>(
-    props: ControlledInput<T>,
-): ChangeHandler<T> => (val: T) => {
-    const { disabled, name, onChange } = props;
+const replaceChangeHandlerImplementation =
+    <T>(props: ControlledInput<T>): ChangeHandler<T> =>
+    (val: T) => {
+        const { disabled, name, onChange } = props;
 
-    if (disabled || !onChange) return;
+        if (disabled || !onChange) return;
 
-    onChange(val, name);
-};
+        onChange(val, name);
+    };
 
 /**
  * Create a function to propagate a completely new value on change.
@@ -31,7 +31,7 @@ const replaceChangeHandlerImplementation = <T>(
  *
  * @param props
  *      The `props` from which the `ControlledInput` properties should be taken.
- * 
+ *
  * @public
  */
 // This is a renaming of the function so that it presents as a hook to React.
@@ -49,10 +49,10 @@ export const useReplaceChangeHandler = replaceChangeHandlerImplementation;
  *      The component instance from which props should be taken.
  *      This will most typically be `this`.
  */
-export const makeReplaceChangeHandler = <T>(
-    component: Component<ControlledInput<T>>,
-): ChangeHandler<T> => value =>
-    replaceChangeHandlerImplementation(component.props)(value);
+export const makeReplaceChangeHandler =
+    <T>(component: Component<ControlledInput<T>>): ChangeHandler<T> =>
+    value =>
+        replaceChangeHandlerImplementation(component.props)(value);
 
 /**
  * Error thrown when a `ControlledInput` without a `name` property value
@@ -75,22 +75,24 @@ export class MissingFieldError extends Error {
  *      The `props` from which the `ControlledInput` properties should be taken.
  */
 // tslint:disable-next-line: no-any
-const fieldChangeHandlerImplementation = <T extends { [k: string]: any }>(
-    props: ControlledInput<T>,
-): FieldChangeHandler<T> => (val, fieldName): void => {
-    const { disabled, name, value, onChange } = props;
-    if (disabled || !onChange) return;
+const fieldChangeHandlerImplementation =
+    <T extends Record<string, unknown>>(
+        props: ControlledInput<T>,
+    ): FieldChangeHandler<T> =>
+    (val, fieldName): void => {
+        const { disabled, name, value, onChange } = props;
+        if (disabled || !onChange) return;
 
-    if (typeof fieldName !== 'string') throw new MissingFieldError();
+        if (typeof fieldName !== 'string') throw new MissingFieldError();
 
-    onChange(
-        {
-            ...value,
-            [fieldName]: val,
-        },
-        name,
-    );
-};
+        onChange(
+            {
+                ...value,
+                [fieldName]: val,
+            },
+            name,
+        );
+    };
 
 /**
  * Create a function to propagate a single field update on an object value.
@@ -99,7 +101,7 @@ const fieldChangeHandlerImplementation = <T extends { [k: string]: any }>(
  *
  * @param props
  *      The `props` from which the `ControlledInput` properties should be taken.
- * 
+ *
  * @public
  */
 // This is a renaming of the function so that it presents as a hook to React.
@@ -120,7 +122,9 @@ export const useFieldChangeHandler = fieldChangeHandlerImplementation;
  *      This will most typically be `this`.
  */
 // tslint:disable-next-line:no-any
-export const makeFieldChangeHandler = <T extends { [k: string]: any }>(
-    component: Component<ControlledInput<T>>,
-): FieldChangeHandler<T> => (value, name) =>
-    fieldChangeHandlerImplementation(component.props)(value, name);
+export const makeFieldChangeHandler =
+    <T extends Record<string, unknown>>(
+        component: Component<ControlledInput<T>>,
+    ): FieldChangeHandler<T> =>
+    (value, name) =>
+        fieldChangeHandlerImplementation(component.props)(value, name);

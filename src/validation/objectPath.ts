@@ -40,7 +40,7 @@ const create = (...parts: (string | number)[]): ObjectPath =>
     // in the second argument narrows the type of the `previousValue`
     // callback parameter. We have to do some casting to make it accept
     // that we know what we're doing.
-    // tslint:disable-next-line:no-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     parts.reduce((s, v: any) => extend(s, v), EMPTY as any);
 
 const prefix = (path: ObjectPath, prefixVal: string | number): ObjectPath =>
