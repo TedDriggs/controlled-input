@@ -54,8 +54,10 @@ const prefix = (path: ObjectPath, prefixVal: string | number): ObjectPath =>
  * @param path The base path to be extended
  * @param and The suffix to append
  */
-const extend = (path: ObjectPath, and: string | number): ObjectPath =>
-    concat(path, createPart(and));
+const extend = (
+    path: ObjectPath | undefined,
+    and: string | number,
+): ObjectPath => concat(path ?? EMPTY, createPart(and));
 
 /**
  * Concatenate two object paths to produce one deeper object path.
@@ -108,7 +110,7 @@ const startsWith = (path: ObjectPath, prefixVal: ObjectPath): boolean => {
         // path segment.
         const charAfter = path.charAt(trimmedPath.length);
 
-        return ACCEPTABLE_SUFFIXES.indexOf(charAfter) !== -1;
+        return ACCEPTABLE_SUFFIXES.includes(charAfter);
     }
     return path.startsWith(prefixVal);
 };
