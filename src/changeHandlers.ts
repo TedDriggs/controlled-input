@@ -76,9 +76,7 @@ export class MissingFieldError extends Error {
  */
 // tslint:disable-next-line: no-any
 const fieldChangeHandlerImplementation =
-    <T extends Record<string, unknown>>(
-        props: ControlledInput<T>,
-    ): FieldChangeHandler<T> =>
+    <T>(props: ControlledInput<T>): FieldChangeHandler<T> =>
     (val, fieldName): void => {
         const { disabled, name, value, onChange } = props;
         if (disabled || !onChange) return;
@@ -123,8 +121,6 @@ export const useFieldChangeHandler = fieldChangeHandlerImplementation;
  */
 // tslint:disable-next-line:no-any
 export const makeFieldChangeHandler =
-    <T extends Record<string, unknown>>(
-        component: Component<ControlledInput<T>>,
-    ): FieldChangeHandler<T> =>
+    <T>(component: Component<ControlledInput<T>>): FieldChangeHandler<T> =>
     (value, name) =>
         fieldChangeHandlerImplementation(component.props)(value, name);
