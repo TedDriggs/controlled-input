@@ -63,6 +63,7 @@ export const makeReplaceChangeHandler =
 export class MissingFieldError extends Error {
     constructor() {
         super('Change handler requires a field name');
+        this.name = 'MissingFieldError';
     }
 }
 
