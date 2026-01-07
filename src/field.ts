@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* Using `Record<string, unknown>` as-advised by the lint did not work. */
 
-import { MissingFieldError } from 'changeHandlers';
-import { ControlledInput } from 'interface';
-import { diagnosticsFor, ObjectPath, ShowsDiagnostics } from 'validation';
+import { MissingFieldError } from './changeHandlers';
+import { ControlledInput } from './interface';
+import { diagnosticsFor, ObjectPath, ShowsDiagnostics } from './validation';
 
 export type FieldInputProps<T extends {}> = <K extends string & keyof T>(
     fieldName: K,
